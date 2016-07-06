@@ -9,31 +9,44 @@
 <body>
 	<p id="header">Tach!</p>
 	
-	<select id="cmbEffectList" >
-		<option>Choose a potion effect...</option>
-	</select>
+	<div id="parentDiv">
+	
+	
+	</div>
 	
 	
 	
 	
 	<script>
 		function init() {
-			init_combobox();
+			var testList = create_combobox("testList", getEffects(), function(selectedValue) {
+				console.log(selectedValue);
+			});
+			
+			document.getElementById("parentDiv").appendChild(testList);
 		}	
 		
-				
 		
-		function init_combobox() {
-			var cmb_effectList = document.getElementById("cmbEffectList"); 
-			var effects = getEffects();
+		// creates a select box with prefilled values
+		function create_combobox(id, valueList, callback) {
 			
-			for(var i = 0; i < effects.length; i++) {
-				var effect = effects[i];
-				var el = document.createElement("option");
-				el.textContent = effect;
-			    el.value = effect;
-				cmb_effectList.appendChild(el);
+			// create select box, assign ID and register callback
+			var _selectBox = document.createElement("select"); 
+			_selectBox.id = id;
+			_selectBox.onchange = function() { 
+				callback(_selectBox.options[_selectBox.selectedIndex].value); 
 			}
+			
+			// add options from given list to the select box
+			for(var i = 0; i < valueList.length; i++) {
+				var _value = valueList[i];
+				var _option = document.createElement("option");
+				_option.textContent = _value;
+			    _option.value = _value;
+				_selectBox.appendChild(_option);
+			}
+			
+			return _selectBox;
 		}
 		
 		
