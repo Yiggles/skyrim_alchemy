@@ -9,14 +9,20 @@
   <body>
     <p id="header">Tach!</p>
 
-    <div id="queryDiv">
-
-
-    </div>
-	<div id="resultDiv">
-		<ul style="list-style-type:disc" id="resultList">
-			
-		</ul>
+    <div id="parentDiv">
+		<table id="" border="1">
+			<tr id="tr_select">
+				<td id="td_select1"></td>
+				<td id="td_select2"></td>
+				<td id="td_select3"></td>
+			</tr>		
+			<tr id="tr_result">
+				<td><ul id="resultList1"></ul></td>
+				<td><ul id="resultList2"></ul></td>
+				<td><ul id="resultList3"></ul></td>
+			</tr>		
+		</table>
+		
     </div>
 
 
@@ -25,21 +31,34 @@
       function init() {
         var cmb_select_ingredient = create_combobox("cmb_select_ingredient", getEffects(), function(selectedValue) {
 			var list = getIngredientsForEffect(selectedValue);
-			var resultList = document.getElementById("resultList");
+			var resultList = document.getElementById("resultList1");
 		
 			resultList.innerHTML = "";
-		
 			list.forEach( function(e,i) {
 				var _listElem = document.createElement("li");
 				_listElem.textContent = e.ingredient
 				_listElem.value = e.ingredient
 				resultList.appendChild(_listElem);
 			});
+			
+			
+			
+			
+			
           
         });
 
-        document.getElementById("queryDiv").appendChild(cmb_select_ingredient);
+        document.getElementById("td_select1").appendChild(cmb_select_ingredient);
       }
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
 	  
 
       // creates a select box with prefilled values
