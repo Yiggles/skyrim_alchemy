@@ -2,6 +2,7 @@
 
   <head>
     <script src="data.js"></script>
+	<script src="logic.js"></script>
 
   </head>
 
@@ -12,9 +13,9 @@
     <div id="parentDiv">
 		<table id="" border="1">
 			<tr id="tr_select">
-				<td id="td_select1"></td>
-				<td id="td_select2"></td>
-				<td id="td_select3"></td>
+				<td id="td_select1"><select id="cmb_select_ingredient1"></select></td>
+				<td id="td_select2"><select id="cmb_select_ingredient2"></select></td>
+				<td id="td_select3"><select id="cmb_select_ingredient3"></select></td>
 			</tr>		
 			<tr id="tr_result">
 				<td><ul id="resultList1"></ul></td>
@@ -22,130 +23,11 @@
 				<td><ul id="resultList3"></ul></td>
 			</tr>		
 		</table>
-		
     </div>
 
-
-
     <script>
-      function init() {
-        var cmb_select_ingredient = create_combobox("cmb_select_ingredient", getEffects(), function(selectedValue) {
-			var list = getIngredientsForEffect(selectedValue);
-			var resultList = document.getElementById("resultList1");
-		
-			resultList.innerHTML = "";
-			list.forEach( function(e,i) {
-				var _listElem = document.createElement("li");
-				_listElem.textContent = e.ingredient
-				_listElem.value = e.ingredient
-				resultList.appendChild(_listElem);
-			});
-			
-			
-			
-			
-			
-          
-        });
-
-        document.getElementById("td_select1").appendChild(cmb_select_ingredient);
-      }
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-
-      // creates a select box with prefilled values
-      function create_combobox(id, valueList, callback) {
-
-        // create select box, assign ID and register callback
-        var _selectBox = document.createElement("select");
-        _selectBox.id = id;
-        _selectBox.onchange = function() {
-          callback(_selectBox.options[_selectBox.selectedIndex].value);
-        }
-
-        // add options from given list to the select box
-        for (var i = 0; i < valueList.length; i++) {
-          var _value = valueList[i];
-          var _option = document.createElement("option");
-          _option.textContent = _value;
-          _option.value = _value;
-          _selectBox.appendChild(_option);
-        }
-
-        return _selectBox;
-      }
-
-	  // get a list of ingredients that have a specific effect
-	  function getIngredientsForEffect( effect ) {
-		var listOfIngredientsForEffect = [];
-		data.forEach( function( elem, index ) {
-			if( elem.effects.includes(effect) ) {
-				listOfIngredientsForEffect.push(elem);
-			}
-		});
-		return listOfIngredientsForEffect;
-	  }
-	  
-	  // get a list of all ingredients
-      function getIngredients() {
-        var listOfIngredients = []
-        data.forEach( function( elem, index) {
-			listOfIngredients.push(elem.ingredient);
-		});
-        return listOfIngredients;
-      }
-
-	  // get a unique list of all effects
-      function getEffects() {
-        var listOfEffects = []
-        data.forEach( function(e,i) {
-			listOfEffects = listOfEffects.concat(e.effects);
-		});
-        return unique(listOfEffects);
-      }
-
-	  // utility function to make a list unique
-      function unique(a) {
-        return a.sort().filter(function(value, index, array) {
-          return (index === 0) || (value !== array[index - 1]);
-        });
-      }
-	  
-	  // load the raw data list and create an object for each record
-	  function loadData() {
-	    var data = [];
-		for (var i = 0; i < raw_data.length; i++) {
-			data.push(eval({
-				ingredient: raw_data[i][0],
-				effects: [
-						raw_data[i][1],
-						raw_data[i][2],
-						raw_data[i][3],
-						raw_data[i][4]
-			]}));
-        }
-
-		return data;
-	  }	  
-	  
-	  // ###################################################################
-	  // ###################################################################
-	  // ###################################################################
-
-	  // load the raw data and convert it to object list
 	  var data = loadData();
-	  
-	  // kick the thing off.....
       init();
-
     </script>
 
   </body>
