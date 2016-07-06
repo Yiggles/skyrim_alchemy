@@ -9,11 +9,8 @@
 <body>
 	<p id="header">Tach!</p>
 	
-	<select>
-	  <option value="volvo">Volvo</option>
-	  <option value="saab">Saab</option>
-	  <option value="mercedes">Mercedes</option>
-	  <option value="audi">Audi</option>
+	<select id="cmbEffectList" >
+		<option>Choose a potion effect...</option>
 	</select>
 	
 	
@@ -24,22 +21,47 @@
 			init_combobox();
 		}	
 		
+				
+		
 		function init_combobox() {
+			var cmb_effectList = document.getElementById("cmbEffectList"); 
+			var effects = getEffects();
 			
+			for(var i = 0; i < effects.length; i++) {
+				var effect = effects[i];
+				var el = document.createElement("option");
+				el.textContent = effect;
+			    el.value = effect;
+				cmb_effectList.appendChild(el);
+			}
 		}
 		
 		
 		function getIngredients() {
+			var listOfIngredients = []
 			for( var i = 0; i < raw_data.length; i++) {
-				var caption = raw_data[i][0]
-				console.log(caption);
-			}			
+				listOfIngredients.push(raw_data[i][0]);				
+			}
+			return listOfIngredients;
 		}
 		
 		function getEffects() {
+			var listOfEffects = []
+			for( var i = 0; i < raw_data.length; i++) {
+				for( var x = 1; x < 5; x++) {
+					listOfEffects.push(raw_data[i][x]);
+				}		
+			}
 			
-		
+			return unique(listOfEffects);
 		}
+		
+		function unique(a) {
+			return a.sort().filter(function(value, index, array) {
+				return (index === 0) || (value !== array[index-1]);
+			});
+		}
+		
 		
 		init();
 		
